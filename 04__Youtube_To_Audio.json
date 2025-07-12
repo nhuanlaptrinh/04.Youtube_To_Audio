@@ -1,0 +1,802 @@
+{
+  "name": "04. Youtube_To_Audio",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU",
+          "mode": "list",
+          "cachedResultName": "01.Transcript Audio_1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Audio",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c_ewIIKBFIRj2heZPutaosCZ9unsayRQpfBEGL46YX8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Link Video": "={{ $('Lấy File Video từ Google Sheet').item.json[\"Link Video\"] }}",
+            "Transcript": "={{ $('Lấy kết quả của  transcript').item.json.captions }}",
+            "row_number": "={{ $('Lấy File Video từ Google Sheet').item.json.row_number }}",
+            "Link  Audio ": "={{ $('Tải  Audio lên GG Drive').item.json.webViewLink }}",
+            "Status": "Succses"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Link Video",
+              "displayName": "Link Video",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link  Audio ",
+              "displayName": "Link  Audio ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2800,
+        0
+      ],
+      "id": "f0966b71-cc66-40f8-9bc7-3b6e3d8b2152",
+      "name": "Cập Nhật Link Audio và Trạng Thái",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2580,
+        0
+      ],
+      "id": "2b8e22f7-d628-4deb-bde4-e14864058833",
+      "name": "Chia Sẻ Audio",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rxFyTs7otauqN2lC",
+          "name": "Google Drive account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1fbTV4B7RdxT9nenbPkPMBEkkB4t_XIs7",
+          "mode": "list",
+          "cachedResultName": "99. Audio_N8n",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1fbTV4B7RdxT9nenbPkPMBEkkB4t_XIs7"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2360,
+        0
+      ],
+      "id": "41342c01-7a19-4fda-ba9b-6270ce06406b",
+      "name": "Tải  Audio lên GG Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rxFyTs7otauqN2lC",
+          "name": "Google Drive account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "input": "={{ $('Tóm Tắt Audio').item.json.message.content }}",
+        "voice": "echo",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2140,
+        0
+      ],
+      "id": "f114c2ca-ad36-4ace-b699-f0f235f17655",
+      "name": "Lấy Audio",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU",
+          "mode": "list",
+          "cachedResultName": "01.Transcript Audio_1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Audio",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Link Video": "={{ $('Lấy File Video từ Google Sheet').item.json[\"Link Video\"] }}",
+            "Transcript": "={{ $('Lấy kết quả của  transcript').item.json.captions }}",
+            "row_number": "={{ $('Lấy File Video từ Google Sheet').item.json.row_number }}",
+            "Status": "=Pro",
+            "Summary": "={{ $json.message.content }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Link Video",
+              "displayName": "Link Video",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link  Audio ",
+              "displayName": "Link  Audio ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1920,
+        0
+      ],
+      "id": "60d17d91-44e3-4960-b91d-e21018838bef",
+      "name": "Cập Nhật Transcript và Tóm Tắt",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=tóm tắt nội dung sau khoảng 50 từ :\n{{ $json.captions }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1540,
+        0
+      ],
+      "id": "b45d13f4-4ce9-4089-9cc5-0c67617d7eb5",
+      "name": "Tóm Tắt Audio",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $json.data.defaultDatasetId }}/items",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "limit",
+              "value": "100"
+            },
+            {
+              "name": "token",
+              "value": "apify_api_sx7F7pMmeH5XTaFvTpypjeygMXxG7w1sjsoq"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer apify_api_y1U08omJvUIg3y19345AhaCbc0PEp64bkXsX"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "91ebf243-70c2-4d43-9957-1fdbbefeaaac",
+      "name": "Lấy kết quả của  transcript"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU",
+          "mode": "list",
+          "cachedResultName": "01.Transcript Audio_1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Audio",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Link Video": "={{ $json['Link Video'] }}",
+            "row_number": "={{ $('Lấy File Video từ Google Sheet').item.json.row_number }}",
+            "Status": "Pro"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Link Video",
+              "displayName": "Link Video",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link  Audio ",
+              "displayName": "Link  Audio ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        440,
+        0
+      ],
+      "id": "298b9bd4-6017-49c1-a0d3-6377c7e10676",
+      "name": "Cập Nhật Trạng Thái",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU",
+          "mode": "list",
+          "cachedResultName": "01.Transcript Audio_1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Audio",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13IPSvK1hi-ftvbOP3PDyDHAhE9zjk--c_Z-JFhm5HZU/edit#gid=0"
+        },
+        "event": "=anyUpdate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "77d087c6-65ac-4e02-98d6-8c7645027d91",
+      "name": "Lấy File Video từ Google Sheet",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "2DPcGTQPaiyywVU2",
+          "name": "GGS_20250606"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "44512f3f-1609-4735-8bc4-771360140abe",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "Run",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "df79df6c-a02c-437d-8776-71dc70abd8be",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "860465d9-427a-4db9-bedc-8a7377be9ba7",
+      "name": "Wait1",
+      "webhookId": "7f6f569e-c08e-4e18-8dd1-afb274136a6d"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.data.id }}?token=apify_api_4eTs27f4B9V16YDCsrKE4jkriaYl823ixoQk",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "apify_api_31ch6vTTmjIEJPLXWFHmk51awrNgr64vFTVU"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "b1649290-0649-40df-9460-a2272bb66e63",
+      "name": "Lấy Thông Tin Chi Tiết của Actor Sau Run 2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/1s7eXiaukVuOr4Ueg/runs",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer apify_api_sx7F7pMmeH5XTaFvTpypjeygMXxG7w1sjsoq"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"channelHandleBoolean\": true,\n    \"channelIDBoolean\": true,\n    \"channelNameBoolean\": true,\n    \"commentsBoolean\": false,\n    \"datePublishedBoolean\": true,\n    \"dateTextBoolean\": false,\n    \"descriptionBoolean\": false,\n    \"keywordsBoolean\": false,\n    \"likesBoolean\": false,\n    \"maxRetries\": 3,\n    \"outputFormat\": \"singleStringText\",\n    \"proxyOptions\": {\n        \"useApifyProxy\": true,\n        \"apifyProxyGroups\": [\n            \"RESIDENTIAL\"\n        ]\n    },\n    \"relativeDateTextBoolean\": true,\n    \"subscriberCountBoolean\": false,\n    \"thumbnailBoolean\": false,\n    \"uploadDateBoolean\": false,\n    \"urls\": [\"{{ $('Lấy File Video từ Google Sheet').item.json['Link Video'] }}\"],\n    \"viewCountBoolean\": false\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "3ad9d74d-7dd0-45f9-8553-845019f5428a",
+      "name": "Lấy Thông Tin Chi Tiết của Actor Sau Run 1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chia Sẻ Audio": {
+      "main": [
+        [
+          {
+            "node": "Cập Nhật Link Audio và Trạng Thái",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tải  Audio lên GG Drive": {
+      "main": [
+        [
+          {
+            "node": "Chia Sẻ Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lấy Audio": {
+      "main": [
+        [
+          {
+            "node": "Tải  Audio lên GG Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cập Nhật Transcript và Tóm Tắt": {
+      "main": [
+        [
+          {
+            "node": "Lấy Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tóm Tắt Audio": {
+      "main": [
+        [
+          {
+            "node": "Cập Nhật Transcript và Tóm Tắt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lấy kết quả của  transcript": {
+      "main": [
+        [
+          {
+            "node": "Tóm Tắt Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cập Nhật Trạng Thái": {
+      "main": [
+        [
+          {
+            "node": "Lấy Thông Tin Chi Tiết của Actor Sau Run 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lấy File Video từ Google Sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Cập Nhật Trạng Thái",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Lấy kết quả của  transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lấy Thông Tin Chi Tiết của Actor Sau Run 2": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lấy Thông Tin Chi Tiết của Actor Sau Run 1": {
+      "main": [
+        [
+          {
+            "node": "Lấy Thông Tin Chi Tiết của Actor Sau Run 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "87e94a18-d801-4e2b-b643-47fadab2e9ee",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "94a383c02457267bcc44878635a0fa02b7d3206c5479bfc8890faa812e2bbd97"
+  },
+  "id": "BckE16BJCyrOit7P",
+  "tags": []
+}
