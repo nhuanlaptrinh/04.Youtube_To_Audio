@@ -375,7 +375,7 @@
             },
             {
               "name": "Authorization",
-              "value": "Bearer apify_api_y1U08omJvUIg3y19345AhaCbc0PEp64bkXsX"
+              "value": "Bearer "
             }
           ]
         },
@@ -595,7 +595,7 @@
     },
     {
       "parameters": {
-        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.data.id }}?token=apify_api_4eTs27f4B9V16YDCsrKE4jkriaYl823ixoQk",
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.data.id }}?token=",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -790,7 +790,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "0ca3f92d-68ab-4ba9-9fd4-663e87e6f388",
+  "versionId": "18a253bb-ea34-43cc-aa19-ef8fb33bb72b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "94a383c02457267bcc44878635a0fa02b7d3206c5479bfc8890faa812e2bbd97"
